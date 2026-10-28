@@ -4,7 +4,7 @@
 | --- | --- |
 | **Estudiante** | David Correa |
 | **Asignatura** | Infraestructura TI y Cloud Computing (2026-2) |
-| **Sitio publicado** | http://SUBDOMINIO.duckdns.org |
+| **Sitio publicado** | http://davidcorrea-oci.duckdns.org |
 | **Repositorio** | https://github.com/DavoCor/pagina-personal-oci |
 
 ## Objetivo
@@ -23,17 +23,17 @@ Crear una máquina virtual nueva en OCI (Oracle Cloud Infrastructure, infraestru
 | Imagen y forma | Oracle Linux 9, `VM.Standard.E5.Flex` (1 OCPU, 16 GB de memoria) |
 | Llave SSH | `llave-personal.key` (no se publica en el repositorio) |
 | Dirección IP pública | `157.137.218.28` |
-| Subdominio | `SUBDOMINIO.duckdns.org` |
+| Subdominio | `davidcorrea-oci.duckdns.org` |
 | Carpeta que publica Nginx | `/usr/share/nginx/html` |
 
 ## Requisitos de la página y cómo se cumplen
 
 | Requisito | Dónde está |
 | --- | --- |
-| Al menos tres secciones | Inicio, ¿Cómo está publicada? y Lista de pendientes (`sitio/index.html`) |
-| Imágenes | Cuatro imágenes SVG en `sitio/img/`: avatar (`perfil.svg`), nube, diagrama de la red y favicon |
-| CSS adaptable a móviles | `sitio/css/estilos.css`: con `@media (max-width: 700px)` las tarjetas pasan a una columna y aparece el botón **Menú**; el título usa `clamp()` |
-| Funcionalidad en JavaScript | `sitio/js/app.js`: lista de pendientes (agregar, marcar como hecha y borrar), modo oscuro, menú para celular y aviso de la dirección desde la que se ve la página |
+| Al menos tres secciones | Inicio, Resumen de los talleres, Preguntas de opción múltiple, Verdadero o falso y Tarjetas de repaso (`sitio/index.html`) |
+| Imágenes | Cuatro imágenes SVG en `sitio/img/`: iniciales (`perfil.svg`), nube, diagrama de la red y favicon |
+| CSS adaptable a móviles | `sitio/css/estilos.css`: con `@media (max-width: 900px)` y `@media (max-width: 700px)` las tarjetas pasan a dos y a una columna y aparece el botón **Menú**; el título usa `clamp()` |
+| Funcionalidad en JavaScript | `sitio/js/app.js`: juegos de repaso de los talleres 1, 2 y 3 (opción múltiple con puntaje y filtro por taller, verdadero o falso y tarjetas que se voltean), modo oscuro, menú para celular y aviso de la dirección desde la que se ve la página |
 
 ## Estructura del repositorio
 
@@ -285,12 +285,12 @@ Después de esta prueba cambié el contenido de la página. Para publicar la ver
 
 ## Fase 4. Configurar el subdominio de DuckDNS
 
-DuckDNS es un servicio gratuito de DNS (Domain Name System, sistema de nombres de dominio) que asocia un nombre como `SUBDOMINIO.duckdns.org` con la IP pública del servidor.
+DuckDNS es un servicio gratuito de DNS (Domain Name System, sistema de nombres de dominio) que asocia un nombre como `davidcorrea-oci.duckdns.org` con la IP pública del servidor.
 
 ### Paso 4.1. Crear el subdominio y apuntarlo a la máquina
 
 1. Abre `https://www.duckdns.org` e inicia sesión con tu cuenta de GitHub o Google.
-2. En **sub domain** escribe `SUBDOMINIO` (letras minúsculas, números y guiones) y pulsa **add domain**.
+2. En **sub domain** escribe `davidcorrea-oci` (letras minúsculas, números y guiones) y pulsa **add domain**.
 3. En la fila del subdominio, el campo **current ip** muestra la IP de tu casa. Reemplázala por `157.137.218.28` y pulsa **update ip**.
 4. Comprueba que la fila muestre la IP de la máquina virtual.
 
@@ -304,7 +304,7 @@ DuckDNS es un servicio gratuito de DNS (Domain Name System, sistema de nombres d
 En la sesión de `servidor-personal`:
 
 ```bash
-getent hosts SUBDOMINIO.duckdns.org
+getent hosts davidcorrea-oci.duckdns.org
 ```
 
 Debe mostrar `157.137.218.28` seguida del subdominio. Si muestra otra IP o nada, espera un minuto y repite.
@@ -314,14 +314,14 @@ Debe mostrar `157.137.218.28` seguida del subdominio. Si muestra otra IP o nada,
 
 ### Paso 4.3. Configurar Nginx para el subdominio
 
-Se crea un bloque `server` propio para el subdominio, con un registro de accesos separado. Reemplaza `SUBDOMINIO` antes de pegar el bloque.
+Se crea un bloque `server` propio para el subdominio, con un registro de accesos separado.
 
 ```bash
 sudo tee /etc/nginx/conf.d/pagina-personal.conf > /dev/null <<'EOF'
 server {
     listen 80;
     listen [::]:80;
-    server_name SUBDOMINIO.duckdns.org;
+    server_name davidcorrea-oci.duckdns.org;
 
     root /usr/share/nginx/html;
     index index.html;
@@ -360,7 +360,7 @@ sudo systemctl reload nginx
 1. Escribe `exit` para salir del servidor y volver a Cloud Shell. Ejecuta:
 
 ```bash
-curl -I http://SUBDOMINIO.duckdns.org
+curl -I http://davidcorrea-oci.duckdns.org
 ```
 
 Debe responder `HTTP/1.1 200 OK` y `Server: nginx`. Cloud Shell es un equipo distinto a la máquina virtual, así que la prueba llega por Internet.
@@ -368,14 +368,14 @@ Debe responder `HTTP/1.1 200 OK` y `Server: nginx`. Cloud Shell es un equipo dis
 <!-- Captura: curl -I al subdominio desde Cloud Shell con 200 OK -->
 ![Prueba con curl desde Cloud Shell](capturas/18-curl-subdominio.png)
 
-2. En un celular con el wifi apagado (solo datos móviles), abre `http://SUBDOMINIO.duckdns.org`. Escribe `http://` al inicio: la página no usa HTTPS y algunos navegadores muestran un aviso de conexión no segura; en ese caso elige continuar al sitio.
+2. En un celular con el wifi apagado (solo datos móviles), abre `http://davidcorrea-oci.duckdns.org`. Escribe `http://` al inicio: la página no usa HTTPS y algunos navegadores muestran un aviso de conexión no segura; en ese caso elige continuar al sitio.
 
 <!-- Captura: página abierta en el celular con datos móviles, mostrando la dirección -->
 ![Página en el celular con el subdominio](capturas/19-pagina-celular.png)
 
-3. Prueba la funcionalidad en JavaScript: en **Lista de pendientes** agrega dos o tres tareas, marca una como hecha y borra otra. Prueba también el botón **Modo oscuro** y el menú del celular.
+3. Prueba la funcionalidad en JavaScript: responde algunas **Preguntas de opción múltiple** (una bien y una mal) y algunas de **Verdadero o falso**, y voltea una de las **Tarjetas de repaso**. Prueba también el botón **Modo oscuro** y el menú del celular.
 
-<!-- Captura: lista de pendientes con tareas, una marcada como hecha -->
+<!-- Captura: preguntas respondidas, con una correcta y una incorrecta -->
 ![Funcionalidad en JavaScript](capturas/20-funcion-js.png)
 
 ### Paso 4.5. Revisar las visitas en el registro de Nginx
@@ -397,7 +397,7 @@ Cada línea es una visita: la IP de quien abrió la página, la fecha, el archiv
 
 | Entregable | Dirección |
 | --- | --- |
-| Página publicada | http://SUBDOMINIO.duckdns.org |
+| Página publicada | http://davidcorrea-oci.duckdns.org |
 | Guía | https://github.com/DavoCor/pagina-personal-oci/blob/main/README.md |
 
 La máquina `servidor-personal` queda encendida para la verificación del docente. La IP pública de la máquina se conserva mientras la instancia exista; si alguna vez cambia, se actualiza en el campo **current ip** de DuckDNS.
@@ -422,7 +422,7 @@ Después de la calificación, la máquina se elimina como en la fase 3 del talle
 | `Permission denied (publickey)` | Usuario `opc` y la llave `llave-personal.key` de esta máquina, no la del taller 2 |
 | `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED` | La IP la usó antes otra máquina; ejecuta `ssh-keygen -R 157.137.218.28` en Cloud Shell y conecta de nuevo |
 | La página no abre con la IP | Regla del puerto 80, `sudo firewall-cmd --list-services` debe incluir `http`, `systemctl is-active nginx` debe responder `active` |
-| Abre con la IP pero no con el subdominio | IP en DuckDNS y resultado de `getent hosts SUBDOMINIO.duckdns.org` |
+| Abre con la IP pero no con el subdominio | IP en DuckDNS y resultado de `getent hosts davidcorrea-oci.duckdns.org` |
 | El navegador cambia a `https://` y falla | Escribe la dirección completa con `http://` |
 | Aparece la página de prueba de Nginx | Repite el paso 3.4 y recarga con **Ctrl + F5** |
 | `403 Forbidden` | Repite `sudo restorecon -Rv /usr/share/nginx/html` |

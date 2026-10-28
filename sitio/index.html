@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>David Correa | Taller 3</title>
-  <meta name="description" content="Página personal de David Correa, hecha para el Taller 3 de Infraestructura TI y Cloud Computing.">
+  <title>Repaso Talleres 1, 2 y 3 | David Correa</title>
+  <meta name="description" content="Juegos cortos para repasar los talleres 1, 2 y 3 de Infraestructura TI y Cloud Computing.">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <script>
     // Aplica el tema guardado antes de pintar la página
@@ -21,12 +21,14 @@
 
   <header class="barra">
     <div class="contenedor barra-contenido">
-      <a class="marca" href="#inicio">David Correa</a>
+      <a class="marca" href="#inicio">Repaso OCI</a>
       <nav>
         <ul id="menu">
           <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#sitio">El sitio</a></li>
-          <li><a href="#pendientes">Pendientes</a></li>
+          <li><a href="#resumen">Resumen</a></li>
+          <li><a href="#opcion-multiple">Opción múltiple</a></li>
+          <li><a href="#vf">Verdadero o falso</a></li>
+          <li><a href="#tarjetas">Tarjetas</a></li>
         </ul>
       </nav>
       <button type="button" class="tema-boton">Modo oscuro</button>
@@ -38,34 +40,34 @@
 
     <section id="inicio" class="seccion inicio">
       <div class="inicio-texto">
-        <h1>Hola, soy David Correa</h1>
-        <p>Estudiante de ingeniería. Esta es mi página personal, hecha para el Taller 3 de Infraestructura TI y Cloud Computing.</p>
+        <h1>Repaso de los talleres 1, 2 y 3</h1>
+        <p>Juegos cortos para estudiar para el parcial de Infraestructura TI y Cloud Computing.</p>
+        <p class="autor">
+          <img src="img/perfil.svg" width="48" height="48" alt="Iniciales DC">
+          <span>Hecha por David Correa</span>
+        </p>
         <p class="pequeno">Estás viendo esta página en <strong id="host">este servidor</strong>.</p>
       </div>
-      <img class="avatar" src="img/perfil.svg" width="160" height="160" alt="Avatar con las iniciales DC">
+      <img class="nube" src="img/nube.svg" width="320" height="200" alt="Nube conectada a un servidor con Nginx">
     </section>
 
-    <section id="sitio" class="seccion">
-      <h2>¿Cómo está publicada?</h2>
-      <p>La página está en una máquina virtual de Oracle Cloud y se abre con un subdominio gratuito.</p>
+    <section id="resumen" class="seccion">
+      <h2>Resumen de los talleres</h2>
 
-      <div class="sitio-detalle">
-        <ul class="tarjetas">
-          <li>
-            <h3>Máquina virtual</h3>
-            <p>Oracle Linux 9 en Oracle Cloud Infrastructure.</p>
-          </li>
-          <li>
-            <h3>Servidor web</h3>
-            <p>Nginx entrega los archivos HTML, CSS y JavaScript.</p>
-          </li>
-          <li>
-            <h3>Subdominio</h3>
-            <p>DuckDNS conecta el nombre con la IP pública.</p>
-          </li>
-        </ul>
-        <img class="nube" src="img/nube.svg" width="320" height="200" alt="Nube conectada a un servidor con Nginx" loading="lazy">
-      </div>
+      <ul class="tarjetas">
+        <li>
+          <h3>Taller 1: cuenta y red</h3>
+          <p>Compartimento Infraestructura_y_Cloud, usuario estudiante-web, red red-infraestructura (10.0.0.0/16) con la subred pública subred-web (10.0.0.0/24) y reglas para los puertos 22 y 80.</p>
+        </li>
+        <li>
+          <h3>Taller 2: primera publicación</h3>
+          <p>Máquina servidor-web con Oracle Linux 9, conexión por SSH desde Cloud Shell, Nginx instalado y una página descargada con git.</p>
+        </li>
+        <li>
+          <h3>Taller 3: página propia</h3>
+          <p>Máquina nueva servidor-personal en la misma red, esta página publicada con Nginx y un subdominio de DuckDNS.</p>
+        </li>
+      </ul>
 
       <figure>
         <img src="img/arquitectura.svg" width="760" height="320" alt="Diagrama: el navegador pregunta a DuckDNS la IP del subdominio y luego pide la página por HTTP al servidor Nginx en Oracle Cloud" loading="lazy">
@@ -73,27 +75,60 @@
       </figure>
     </section>
 
-    <section id="pendientes" class="seccion">
-      <h2>Lista de pendientes</h2>
-      <p>Escribe una tarea y pulsa Agregar. Puedes marcarla como hecha o borrarla. La lista se guarda en este navegador.</p>
+    <section id="opcion-multiple" class="seccion">
+      <h2>Preguntas de opción múltiple</h2>
+      <p>Elige una respuesta. Al final ves tu puntaje.</p>
 
-      <form id="form-tarea">
-        <label for="tarea">Nueva tarea</label>
-        <div class="fila-form">
-          <input id="tarea" type="text" maxlength="80" required>
-          <button type="submit">Agregar</button>
+      <div class="filtros" role="group" aria-label="Filtrar preguntas por taller">
+        <button type="button" class="filtro" data-taller="todos" aria-pressed="true">Todos</button>
+        <button type="button" class="filtro" data-taller="1" aria-pressed="false">Taller 1</button>
+        <button type="button" class="filtro" data-taller="2" aria-pressed="false">Taller 2</button>
+        <button type="button" class="filtro" data-taller="3" aria-pressed="false">Taller 3</button>
+      </div>
+
+      <div class="juego">
+        <div id="juego-pregunta">
+          <p class="juego-estado">
+            <span id="juego-numero">Pregunta 1 de 15</span>
+            <span id="juego-puntaje">Puntaje: 0</span>
+          </p>
+          <h3 id="enunciado" class="enunciado" tabindex="-1"></h3>
+          <div id="opciones" class="opciones"></div>
+          <p id="resultado" class="resultado" aria-live="polite"></p>
+          <button type="button" id="siguiente" class="principal" hidden>Siguiente</button>
         </div>
-      </form>
 
-      <p id="contador">No hay tareas todavía.</p>
-      <ul id="lista-tareas"></ul>
+        <div id="juego-final" hidden>
+          <p id="final-texto" class="final-texto" aria-live="polite"></p>
+          <button type="button" id="volver" class="principal">Volver a empezar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="vf" class="seccion">
+      <h2>Verdadero o falso</h2>
+      <p>Responde cada afirmación.</p>
+
+      <div class="vf-resumen">
+        <p id="vf-contador" class="vf-contador" aria-live="polite">Aciertos: 0 de 0 respondidas</p>
+        <button type="button" id="vf-reiniciar">Reiniciar</button>
+      </div>
+
+      <ul id="vf-lista" class="vf-lista"></ul>
+    </section>
+
+    <section id="tarjetas" class="seccion">
+      <h2>Tarjetas de repaso</h2>
+      <p>Toca una tarjeta para ver la respuesta.</p>
+
+      <ul id="rejilla" class="rejilla"></ul>
     </section>
 
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>David Correa · <span id="anio">2026</span></p>
+      <p>Hecha por David Correa · <span id="anio">2026</span></p>
       <p>Servida por Nginx en Oracle Cloud.</p>
     </div>
   </footer>
