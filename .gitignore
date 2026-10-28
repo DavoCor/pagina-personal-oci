@@ -1,0 +1,15 @@
+# Llaves y credenciales: NUNCA deben subirse a GitHub
+*.key
+*.pem
+*.ppk
+id_rsa*
+id_ed25519*
+*.pub
+.env
+datos-taller.txt
+*token*.txt
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini

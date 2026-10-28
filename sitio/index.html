@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>David Correa | Estudiante de ingeniería</title>
+  <meta name="description" content="Página personal de David, estudiante de ingeniería de primer semestre, publicada con Nginx en una máquina virtual de Oracle Cloud.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/estilos.css">
+
+  <!-- Aplica el tema guardado antes de pintar la página (evita un parpadeo) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('tema');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <nav class="barra" aria-label="Principal">
+    <a class="marca" href="#inicio">David</a>
+    <ul id="menu" class="menu">
+      <li><a href="#semestre">Este semestre</a></li>
+      <li><a href="#talleres">Mis talleres</a></li>
+      <li><a href="#laboratorio">Laboratorio</a></li>
+    </ul>
+    <button class="tema-boton" type="button">Modo tablero</button>
+    <button class="menu-boton" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+  </nav>
+
+  <main id="contenido">
+
+    <!-- ===================== SECCIÓN 1: SOBRE MÍ ===================== -->
+    <header id="inicio" class="hero">
+      <svg class="hero-arco" viewBox="0 0 1000 200" aria-hidden="true" focusable="false">
+        <line class="arco-guia" x1="30" y1="190" x2="970" y2="190"/>
+        <line class="arco-guia" x1="500" y1="20" x2="500" y2="190"/>
+        <path class="arco" d="M 30 190 Q 500 -150 970 190" pathLength="1"/>
+        <text class="arco-nota" x="516" y="78">altura máxima</text>
+        <text class="arco-nota" x="944" y="170" text-anchor="end">alcance</text>
+        <circle class="arco-punto" cx="970" cy="190" r="9"/>
+      </svg>
+
+      <div class="hero-grid">
+        <div class="hero-texto">
+          <!-- PERSONALIZA: si quieres, agrega tu apellido después de "David" -->
+          <h1>David Correa</h1>
+          <p class="hero-intro">Estudio ingeniería y voy en primer semestre. Esta es mi página personal: la escribí en HTML, CSS y JavaScript, y la publiqué en una máquina virtual que configuré en Oracle Cloud.</p>
+          <p class="host">Estás viendo esta página en <strong id="host">este servidor</strong></p>
+          <div class="acciones">
+            <a class="boton boton-principal" href="#laboratorio">Probar el laboratorio</a>
+            <a class="boton" href="#talleres">Ver cómo la publiqué</a>
+          </div>
+        </div>
+
+        <!-- PERSONALIZA: puedes cambiar img/perfil.svg por una foto tuya (por ejemplo img/perfil.jpg) -->
+        <figure class="lamina lamina-perfil">
+          <img src="img/perfil.svg" width="320" height="320" alt="Monograma de David: una letra D bajo una trayectoria parabólica">
+        </figure>
+      </div>
+    </header>
+
+    <!-- ===================== SECCIÓN 2: ESTE SEMESTRE ===================== -->
+    <section id="semestre" class="seccion" aria-labelledby="semestre-titulo">
+      <h2 id="semestre-titulo">Lo que estoy aprendiendo</h2>
+      <p class="seccion-intro">Cuatro materias de mi primer semestre. Cada una terminó metida de alguna forma en esta página.</p>
+
+      <ul class="materias">
+        <li class="materia">
+          <figure class="lamina">
+            <img src="img/python.svg" width="320" height="200" alt="Terminal con un programa corto en Python que saluda a David" loading="lazy">
+          </figure>
+          <div>
+            <h3>Programación en Python</h3>
+            <p>Variables, condicionales, ciclos y funciones. Es el lenguaje con el que estoy aprendiendo a pensar un problema paso a paso.</p>
+          </div>
+        </li>
+        <li class="materia">
+          <figure class="lamina">
+            <img src="img/precalculo.svg" width="320" height="200" alt="Plano cartesiano con una parábola y una onda seno" loading="lazy">
+          </figure>
+          <div>
+            <h3>Precálculo</h3>
+            <p>Funciones, gráficas y trigonometría. El seno y el coseno que usa el laboratorio de abajo vienen de aquí.</p>
+          </div>
+        </li>
+        <li class="materia">
+          <figure class="lamina">
+            <img src="img/fisica.svg" width="320" height="200" alt="Bloque sobre un plano inclinado con las fuerzas de peso y normal dibujadas" loading="lazy">
+          </figure>
+          <div>
+            <h3>Física</h3>
+            <p>Movimiento, vectores y fuerzas. El tiro parabólico del laboratorio es un ejercicio de clase convertido en programa.</p>
+          </div>
+        </li>
+        <li class="materia">
+          <figure class="lamina">
+            <img src="img/nube.svg" width="320" height="200" alt="Nube conectada a un servidor con Nginx" loading="lazy">
+          </figure>
+          <div>
+            <h3>Infraestructura TI y Cloud Computing</h3>
+            <p>Redes virtuales, máquinas en la nube y servidores web. Esta página corre sobre lo que construí en esa materia.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===================== SECCIÓN 3: MIS TALLERES ===================== -->
+    <section id="talleres" class="seccion" aria-labelledby="talleres-titulo">
+      <h2 id="talleres-titulo">Mis talleres en la nube</h2>
+      <p class="seccion-intro">Tres talleres en Oracle Cloud Infrastructure, cada uno construido sobre el anterior.</p>
+
+      <div class="talleres-grid">
+        <ol class="pasos">
+          <li>
+            <div>
+              <h3>Cuenta y red</h3>
+              <p>Organicé la cuenta con un compartimento, un usuario con permisos limitados y una red virtual con una subred pública y reglas para los puertos 22 y 80.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Primera publicación</h3>
+              <p>Creé una máquina con Oracle Linux 9, instalé Nginx y publiqué una página de ejemplo descargada desde un repositorio Git.</p>
+            </div>
+          </li>
+          <li class="paso-actual">
+            <div>
+              <h3>Mi propia página</h3>
+              <p>Una máquina nueva, esta página y un subdominio de DuckDNS para abrirla sin tener que recordar la dirección IP.</p>
+            </div>
+          </li>
+        </ol>
+
+        <figure class="lamina diagrama">
+          <div class="diagrama-marco">
+            <img src="img/arquitectura.svg" width="760" height="320" alt="Diagrama: el navegador pregunta a DuckDNS la IP del subdominio y luego pide la página por HTTP, puerto 80, al servidor Nginx dentro de la subred pública de Oracle Cloud" loading="lazy">
+          </div>
+          <figcaption>Así llega tu navegador hasta esta página</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== SECCIÓN 4: LABORATORIO (JavaScript) ===================== -->
+    <section id="laboratorio" class="seccion" aria-labelledby="laboratorio-titulo">
+      <h2 id="laboratorio-titulo">Laboratorio de tiro parabólico</h2>
+      <p class="seccion-intro">Elige la velocidad inicial, el ángulo y dónde lanzas. La página calcula el tiempo de vuelo, la altura máxima y el alcance, y dibuja la trayectoria.</p>
+
+      <div class="lab">
+        <form id="lab-form" class="lab-controles">
+          <div class="control">
+            <label for="velocidad">Velocidad inicial</label>
+            <output id="velocidad-valor" for="velocidad">20 m/s</output>
+            <input type="range" id="velocidad" name="velocidad" min="5" max="50" step="1" value="20">
+          </div>
+          <div class="control">
+            <label for="angulo">Ángulo de lanzamiento</label>
+            <output id="angulo-valor" for="angulo">45°</output>
+            <input type="range" id="angulo" name="angulo" min="5" max="85" step="1" value="45">
+          </div>
+          <div class="control">
+            <label for="gravedad">Dónde lanzas</label>
+            <select id="gravedad" name="gravedad">
+              <option value="9.81" selected>Tierra (g = 9,81 m/s²)</option>
+              <option value="3.72">Marte (g = 3,72 m/s²)</option>
+              <option value="1.62">Luna (g = 1,62 m/s²)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="boton boton-principal">Lanzar</button>
+
+          <dl class="resultados" aria-live="polite">
+            <div><dt>Tiempo de vuelo</dt><dd id="r-tiempo">–</dd></div>
+            <div><dt>Altura máxima</dt><dd id="r-altura">–</dd></div>
+            <div><dt>Alcance</dt><dd id="r-alcance">–</dd></div>
+          </dl>
+        </form>
+
+        <figure class="lab-grafica">
+          <svg id="grafica" viewBox="0 0 640 360" role="img" aria-labelledby="grafica-titulo">
+            <title id="grafica-titulo">Trayectoria del lanzamiento</title>
+          </svg>
+          <figcaption>
+            <span class="nota">el lanzamiento anterior queda punteado</span>
+            <span class="formula">y = x·tan θ − g·x² / (2·v²·cos² θ)</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Hecho por David en su primer semestre de ingeniería.</p>
+    <p>Servido por Nginx desde una máquina virtual de Oracle Cloud Infrastructure. © <span id="anio">2026</span></p>
+  </footer>
+</body>
+</html>
