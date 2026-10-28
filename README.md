@@ -20,9 +20,9 @@ Crear una máquina virtual nueva en OCI (Oracle Cloud Infrastructure, infraestru
 | Usuario de trabajo | `estudiante-web` |
 | Red y subred (reutilizadas del taller 1) | `red-infraestructura` / `subred-web` |
 | Máquina virtual nueva | `servidor-personal` |
-| Imagen y forma | Oracle Linux 9, `VM.Standard.E4.Flex` (1 OCPU, 2 GB de memoria) |
+| Imagen y forma | Oracle Linux 9, `VM.Standard.E5.Flex` (1 OCPU, 16 GB de memoria) |
 | Llave SSH | `llave-personal.key` (no se publica en el repositorio) |
-| Dirección IP pública | `DIRECCION_PUBLICA` |
+| Dirección IP pública | `157.137.218.28` |
 | Subdominio | `SUBDOMINIO.duckdns.org` |
 | Carpeta que publica Nginx | `/usr/share/nginx/html` |
 
@@ -30,10 +30,10 @@ Crear una máquina virtual nueva en OCI (Oracle Cloud Infrastructure, infraestru
 
 | Requisito | Dónde está |
 | --- | --- |
-| Al menos tres secciones | Sobre mí, Lo que estoy aprendiendo, Mis talleres en la nube y Laboratorio de tiro parabólico (`sitio/index.html`) |
-| Imágenes | Siete imágenes SVG en `sitio/img/` (perfil, materias, diagrama de arquitectura y favicon) |
-| CSS adaptable a móviles | `sitio/css/estilos.css`: rejillas que pasan a una columna con `@media (max-width: 860px)` y `@media (max-width: 760px)`, menú desplegable en celular y tamaños de letra con `clamp()` |
-| Funcionalidad en JavaScript | `sitio/js/app.js`: laboratorio que calcula y dibuja un tiro parabólico, cambio de tema claro/oscuro, menú para celular y aviso de la dirección desde la que se ve la página |
+| Al menos tres secciones | Inicio, ¿Cómo está publicada? y Lista de pendientes (`sitio/index.html`) |
+| Imágenes | Cuatro imágenes SVG en `sitio/img/`: avatar (`perfil.svg`), nube, diagrama de la red y favicon |
+| CSS adaptable a móviles | `sitio/css/estilos.css`: con `@media (max-width: 700px)` las tarjetas pasan a una columna y aparece el botón **Menú**; el título usa `clamp()` |
+| Funcionalidad en JavaScript | `sitio/js/app.js`: lista de pendientes (agregar, marcar como hecha y borrar), modo oscuro, menú para celular y aviso de la dirección desde la que se ve la página |
 
 ## Estructura del repositorio
 
@@ -137,9 +137,9 @@ Se crea una máquina distinta a la del taller 2 dentro de la red que ya existe.
 | Name | `servidor-personal` |
 | Compartment | `Infraestructura_y_Cloud` |
 | Image | **Oracle Linux 9** |
-| Shape | **Virtual Machine > AMD >** `VM.Standard.E4.Flex` (si no está disponible, `VM.Standard.E5.Flex`) |
+| Shape | **Virtual Machine > AMD >** `VM.Standard.E5.Flex` |
 | OCPU | `1` |
-| Memory (GB) | `2` |
+| Memory (GB) | `16` |
 
 <!-- Captura: imagen Oracle Linux 9 y forma seleccionadas -->
 ![Imagen y forma de la máquina](capturas/03-imagen-forma.png)
@@ -162,10 +162,10 @@ Se crea una máquina distinta a la del taller 2 dentro de la red que ya existe.
 2. Renombra el archivo privado como `llave-personal.key`. Este archivo nunca se sube a GitHub.
 3. Conserva el disco de arranque predeterminado y pulsa **Create**.
 4. Espera el estado **Running** y dos minutos más para que el sistema termine de iniciar.
-5. Copia **Public IP Address** y guárdala en `datos-taller.txt`. En esta guía aparece como `DIRECCION_PUBLICA`.
+5. Copia **Public IP Address** y guárdala en `datos-taller.txt`. En mi caso es `157.137.218.28`.
 
-<!-- Captura: descarga de las llaves SSH -->
-![Generación de la llave SSH](capturas/05-llaves.png)
+<!-- Captura: llaves descargadas (solo los nombres de los archivos) -->
+![Llaves SSH descargadas](capturas/05-llaves.png)
 
 <!-- Captura: instancia servidor-personal en Running con su IP pública -->
 ![Máquina en ejecución con su IP pública](capturas/06-instancia-running.png)
@@ -193,7 +193,7 @@ chmod 600 ~/llave-personal.key
 4. Conéctate a la máquina nueva y comprueba el usuario:
 
 ```bash
-ssh -i ~/llave-personal.key opc@DIRECCION_PUBLICA
+ssh -i ~/llave-personal.key opc@157.137.218.28
 ```
 
 ```bash
@@ -274,7 +274,9 @@ Las dos primeras órdenes deben responder `success` y la última `HTTP/1.1 200 O
 
 ### Paso 3.6. Probar con la dirección IP pública
 
-En el navegador de tu equipo, abre `http://DIRECCION_PUBLICA`. Debe aparecer la página personal.
+En el navegador de tu equipo, abre `http://157.137.218.28`. Debe aparecer la página personal.
+
+Después de esta prueba cambié el contenido de la página. Para publicar la versión nueva usé los comandos de la [Fase 5](#fase-5-resultado-y-mantenimiento) (`git pull` y `git archive`).
 
 <!-- Captura: navegador con la página abierta por IP -->
 ![Página abierta con la IP pública](capturas/14-pagina-ip.png)
@@ -289,7 +291,7 @@ DuckDNS es un servicio gratuito de DNS (Domain Name System, sistema de nombres d
 
 1. Abre `https://www.duckdns.org` e inicia sesión con tu cuenta de GitHub o Google.
 2. En **sub domain** escribe `SUBDOMINIO` (letras minúsculas, números y guiones) y pulsa **add domain**.
-3. En la fila del subdominio, el campo **current ip** muestra la IP de tu casa. Reemplázala por `DIRECCION_PUBLICA` y pulsa **update ip**.
+3. En la fila del subdominio, el campo **current ip** muestra la IP de tu casa. Reemplázala por `157.137.218.28` y pulsa **update ip**.
 4. Comprueba que la fila muestre la IP de la máquina virtual.
 
 > En la parte superior de DuckDNS aparece un **token**. Es una contraseña: tápalo antes de guardar la captura.
@@ -305,7 +307,7 @@ En la sesión de `servidor-personal`:
 getent hosts SUBDOMINIO.duckdns.org
 ```
 
-Debe mostrar `DIRECCION_PUBLICA` seguida del subdominio. Si muestra otra IP o nada, espera un minuto y repite.
+Debe mostrar `157.137.218.28` seguida del subdominio. Si muestra otra IP o nada, espera un minuto y repite.
 
 <!-- Captura: getent hosts mostrando la IP de la VM -->
 ![Resolución DNS del subdominio](capturas/16-dns.png)
@@ -371,9 +373,9 @@ Debe responder `HTTP/1.1 200 OK` y `Server: nginx`. Cloud Shell es un equipo dis
 <!-- Captura: página abierta en el celular con datos móviles, mostrando la dirección -->
 ![Página en el celular con el subdominio](capturas/19-pagina-celular.png)
 
-3. Prueba la funcionalidad en JavaScript: en **Laboratorio** cambia el ángulo, pulsa **Lanzar** y revisa los resultados y la trayectoria. Prueba también el botón **Modo tablero** y el menú del celular.
+3. Prueba la funcionalidad en JavaScript: en **Lista de pendientes** agrega dos o tres tareas, marca una como hecha y borra otra. Prueba también el botón **Modo oscuro** y el menú del celular.
 
-<!-- Captura: laboratorio con dos lanzamientos dibujados -->
+<!-- Captura: lista de pendientes con tareas, una marcada como hecha -->
 ![Funcionalidad en JavaScript](capturas/20-funcion-js.png)
 
 ### Paso 4.5. Revisar las visitas en el registro de Nginx
@@ -418,7 +420,7 @@ Después de la calificación, la máquina se elimina como en la fase 3 del talle
 | --- | --- |
 | `Connection timed out` al usar `ssh` | Cloud Shell en **Public Network**, IP correcta, estado **Running**, regla del puerto 22 |
 | `Permission denied (publickey)` | Usuario `opc` y la llave `llave-personal.key` de esta máquina, no la del taller 2 |
-| `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED` | La IP la usó antes otra máquina; ejecuta `ssh-keygen -R DIRECCION_PUBLICA` en Cloud Shell y conecta de nuevo |
+| `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED` | La IP la usó antes otra máquina; ejecuta `ssh-keygen -R 157.137.218.28` en Cloud Shell y conecta de nuevo |
 | La página no abre con la IP | Regla del puerto 80, `sudo firewall-cmd --list-services` debe incluir `http`, `systemctl is-active nginx` debe responder `active` |
 | Abre con la IP pero no con el subdominio | IP en DuckDNS y resultado de `getent hosts SUBDOMINIO.duckdns.org` |
 | El navegador cambia a `https://` y falla | Escribe la dirección completa con `http://` |
