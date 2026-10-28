@@ -276,7 +276,7 @@ Las dos primeras órdenes deben responder `success` y la última `HTTP/1.1 200 O
 
 En el navegador de tu equipo, abre `http://157.137.218.28`. Debe aparecer la página personal.
 
-Después de esta prueba cambié el contenido de la página. Para publicar la versión nueva usé los comandos de la [Fase 5](#fase-5-resultado-y-mantenimiento) (`git pull` y `git archive`).
+Después de esta prueba cambié el contenido por una página de repaso de los talleres y la volví a publicar con los comandos de la [Fase 5](#fase-5-resultado-y-mantenimiento) (`git pull` y `git archive`). La captura muestra la versión final.
 
 <!-- Captura: navegador con la página abierta por IP -->
 ![Página abierta con la IP pública](capturas/14-pagina-ip.png)
@@ -383,10 +383,10 @@ Debe responder `HTTP/1.1 200 OK` y `Server: nginx`. Cloud Shell es un equipo dis
 Vuelve a conectarte a `servidor-personal` (flecha arriba en Cloud Shell repite el `ssh`) y ejecuta:
 
 ```bash
-sudo tail -n 5 /var/log/nginx/pagina-personal.access.log
+sudo grep -E "iPhone|curl" /var/log/nginx/pagina-personal.access.log | tail -n 5
 ```
 
-Cada línea es una visita: la IP de quien abrió la página, la fecha, el archivo pedido y el código de respuesta `200`. Ahí aparecen las pruebas del celular y de Cloud Shell.
+`grep` deja solo las visitas del celular (`iPhone`) y de Cloud Shell (`curl`), y `tail -n 5` muestra las últimas cinco. Cada línea es una visita: la IP de quien abrió la página, la fecha, el archivo pedido y el código de respuesta (`200`). En la captura, las últimas cinco son del celular con datos móviles.
 
 <!-- Captura: registro de accesos con las visitas externas -->
 ![Registro de accesos de Nginx](capturas/21-access-log.png)
